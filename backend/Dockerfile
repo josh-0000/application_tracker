@@ -1,5 +1,5 @@
 # Use Node.js 14.x LTS as base image
-FROM node:14
+FROM node:latest
 
 # Set working directory
 WORKDIR /app

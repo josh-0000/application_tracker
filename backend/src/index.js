@@ -1,13 +1,15 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-require('./config/environmentVariables');
 const logger = require('./utils/logger');
+const applicationRoutes = require('./routes/user-data'); 
 const app = express();
-
 app.use(cors());
 app.use(express.json());
 
 const port = process.env.SERVER_PORT;
+
+app.use('/applications', applicationRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World');

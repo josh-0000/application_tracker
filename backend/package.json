@@ -9,6 +9,8 @@
     },
     "author": "Joshua Gmys",
     "dependencies": {
+        "@aws-sdk/client-dynamodb": "^3.496.0",
+        "@aws-sdk/lib-dynamodb": "^3.496.0",
         "aws-sdk": "^2.1540.0",
         "body-parser": "^1.20.2",
         "cors": "^2.8.5",
