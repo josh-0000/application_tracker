@@ -3,6 +3,9 @@ import './App.css';
 import NavBar from './components/Navbar';
 import Profile from './components/Profile';
 import { Container, Row, Col } from 'react-bootstrap';
+import SideBar from './components/SideBar';
+import MainContainer from './components/MainContainer';
+import { AppContextProvider } from './context/AppContext';
 
 function App() {
   return (
@@ -13,9 +16,9 @@ function App() {
         </Col>
       </Row>
       <Row className="m-0 p-0">
-        <Col className="m-0 p-0">
-          <Profile />
-        </Col>
+        <AppContextProvider>
+          <MainContainer />
+        </AppContextProvider>
       </Row>
     </Container>
   );

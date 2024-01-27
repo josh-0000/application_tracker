@@ -1,0 +1,25 @@
+import React, { useState } from 'react';
+import { Form, FormControl, Button } from 'react-bootstrap';
+
+const SearchBar = ({ onSearch }: any) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+    onSearch(searchTerm);
+  };
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormControl
+        type="text"
+        placeholder="Search"
+        className="searchBar mt-5"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+    </Form>
+  );
+};
+
+export default SearchBar;

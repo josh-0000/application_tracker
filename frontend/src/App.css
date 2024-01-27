@@ -2,3 +2,19 @@
   height: 100vh;
   width: 100%;
 }
+
+.sideBar {
+  height: 100vh;
+  overflow: auto;
+}
+
+.mainContainer {
+  height: 100vh;
+  overflow: auto;
+}
+
+.contentContainer {
+  max-width: 800px !important;
+  height: 100vh;
+}
+
