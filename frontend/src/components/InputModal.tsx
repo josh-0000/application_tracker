@@ -4,13 +4,13 @@ import { AppContext } from '../context/AppContext';
 import { useAuth0 } from "@auth0/auth0-react";
 
 function InputModal() {
-  const { showModal, setShowModal } = useContext(AppContext);
-  const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
+  const { showModal, setShowModal, fetchApplications } = useContext(AppContext);
+  const { user } = useAuth0();
   const [company, setCompany] = useState('');
   const [jobTitle, setJobTitle] = useState('');
   const [location, setLocation] = useState('');
   const [workLocation, setworkLocation] = useState('Remote');
-  const [userId, setUserId] = useState('');
+  const [progress, setProgress] = useState('Just Applied');
 
   const hideModal = () => {
     setShowModal(false);
@@ -20,28 +20,21 @@ function InputModal() {
     setworkLocation('Remote');
   };
 
-  if (isLoading) {
-    console.log("Loading...");
-  }
-
-  if (!user) {
-    console.log("User not found");
-  }
-
-  if (!isAuthenticated) {
-    console.log("User not authenticated");
-  }
-
   const handleSave = async () => {
-    try {
-      const accessToken = await getAccessTokenSilently();
+    try {      
+      if (!user) {
+        throw new Error('User is undefined!');
+      }
+
+      const userId = user.sub;
   
       const userData = {
-        userId: accessToken,
+        userId,
         company,
         jobTitle,
         location,
-        workLocation
+        workLocation,
+        progress
       };
   
       const response = await fetch('http://localhost:3001/applications/saveApplication', {
@@ -57,6 +50,7 @@ function InputModal() {
       if (response.ok) {
         console.log('Data saved:', responseData);
         hideModal();
+        fetchApplications(userId);
       } else {
         throw new Error(`Error: ${responseData.error}`);
       }
@@ -64,7 +58,7 @@ function InputModal() {
       console.error('Error saving application data:', error);
     }
   };
-  
+    
   return (
     <>
       <Modal show={showModal} onHide={() => hideModal()}>

@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import NavBar from './components/Navbar';
-import Profile from './components/Profile';
 import { Container, Row, Col } from 'react-bootstrap';
 import SideBar from './components/SideBar';
 import MainContainer from './components/MainContainer';

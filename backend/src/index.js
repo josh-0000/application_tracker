@@ -3,7 +3,9 @@ const express = require('express');
 const cors = require('cors');
 const logger = require('./utils/logger');
 const applicationRoutes = require('./routes/user-data'); 
+
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 

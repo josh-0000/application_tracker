@@ -1,7 +1,7 @@
 const express = require('express');
 const docClient = require('../utils/db-client');
 const logger = require('../utils/logger');
-const { ScanCommand, PutCommand } = require('@aws-sdk/lib-dynamodb');
+const { ScanCommand, PutCommand, QueryCommand } = require('@aws-sdk/lib-dynamodb');
 const { v4: uuidv4 } = require('uuid');
 
 const router = express.Router();
@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 
 router.post('/saveApplication', async (req, res) => {
   try {
-    const { userId, company, jobTitle, location, workLocation } = req.body;
+    const { userId, company, jobTitle, location, workLocation, progress } = req.body;
 
     const applicationId = uuidv4();
     const params = {
@@ -33,7 +33,8 @@ router.post('/saveApplication', async (req, res) => {
         company,
         jobTitle, 
         location, 
-        workLocation
+        workLocation,
+        progress
       }
     };
 
@@ -42,6 +43,35 @@ router.post('/saveApplication', async (req, res) => {
   } catch (err) {
     logger.error(err);
     res.status(500).json({ error: 'Error saving data to DynamoDB' });
+    console.log(err);
+  }
+});
+
+router.post('/fetchApplications', async (req, res) => {
+  try {
+    const { userId } = req.body;
+    let params = {
+      TableName: 'Applications',
+      KeyConditionExpression: 'UserId = :userId',
+      ExpressionAttributeValues: {
+        ':userId': userId
+      }
+    };
+
+    let allItems = [];
+    let result;
+
+    do {
+      result = await docClient.send(new QueryCommand(params));
+      allItems = allItems.concat(result.Items);
+      params.ExclusiveStartKey = result.LastEvaluatedKey;
+    } while (typeof result.LastEvaluatedKey !== "undefined");
+
+    console.log(allItems);
+    res.json(allItems);
+  } catch (err) {
+    logger.error(err);
+    res.status(500).json({ error: 'Error retrieving data from DynamoDB' });
     console.log(err);
   }
 });
