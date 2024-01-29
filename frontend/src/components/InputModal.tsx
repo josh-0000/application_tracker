@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { AppContext } from '../context/AppContext';
 import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from './LoginButton';
 
 function InputModal() {
   const { showModal, setShowModal, fetchApplications } = useContext(AppContext);
@@ -59,6 +60,30 @@ function InputModal() {
     }
   };
     
+  if (!user) {
+    return (
+      <>
+        <Modal show={showModal} onHide={() => hideModal()}>
+          <Modal.Header closeButton>
+            <Modal.Title>Please Login</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            In order to save your applications, please login to your account. 
+            <hr />
+            Signing up is free!
+            <hr />
+            Maximum of 100 applications.
+          </Modal.Body>
+          <Modal.Footer className='mt-3'>
+            <Button variant="secondary" onClick={() => hideModal()}>
+              Close
+            </Button>
+            <LoginButton />
+          </Modal.Footer>
+        </Modal>
+      </>
+    )
+  }
   return (
     <>
       <Modal show={showModal} onHide={() => hideModal()}>

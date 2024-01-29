@@ -3,7 +3,6 @@ import { Container, Row, Col } from "react-bootstrap";
 import SearchBar from "./SearchBar";
 import CreateButton from "./CreateButton";
 import InputModal from "./InputModal";
-import { AppContext } from "../context/AppContext";
 import ApplicationTable from "./ApplicationTable";
 
 function MainContainer() {

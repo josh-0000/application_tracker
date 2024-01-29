@@ -6,7 +6,7 @@ import LogoutButton from "./LogoutButton";
 
 const NavBar = () => {
   const { isAuthenticated } = useAuth0();
-  const buttonContent = isAuthenticated ? <LogoutButton /> : <LoginButton />;
+  const buttonContent = isAuthenticated ? <LogoutButton /> : <LoginButton className="pt-1 pb-1" />;
   
   return (
     <Navbar bg="dark" variant="dark">
