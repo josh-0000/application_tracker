@@ -1,28 +1,36 @@
-import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import React, { useContext } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 import SearchBar from "./SearchBar";
 import CreateButton from "./CreateButton";
 import InputModal from "./InputModal";
+import { AppContext } from "../context/AppContext";
+import ApplicationTable from "./ApplicationTable";
 
 function MainContainer() {
+
   function handleSearch(searchTerm: string) {
     console.log(searchTerm);
   }
 
   return (
-    <Col className="mainContainer">
-      <Container className="ms-auto me-auto contentContainer">
-        <InputModal />
-        <Row>
-          <Col md={10}>
+    <Container className="ms-auto me-auto contentContainer">
+      <InputModal />
+      <Row className="mb-3 m-0 p-0">
+        <Col className="d-flex justify-content-between align-items-center">
+          <div style={{ flex: 1, marginRight: '10px' }}>
             <SearchBar onSearch={handleSearch} />
-          </Col>
-          <Col md={2}>
+          </div>
+          <div>
             <CreateButton />
-          </Col>
-        </Row>
-      </Container>
-    </Col>
+          </div>
+        </Col>
+      </Row>
+      <Row className="m-0 p-0">
+        <Col className="mt-5 m-0 p-0">
+          <ApplicationTable />
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

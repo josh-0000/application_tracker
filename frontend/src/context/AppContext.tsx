@@ -10,6 +10,7 @@ const defaultContextValues = {
   fetchApplications: (_userId: any) => {
     console.error("fetchApplications function not yet implemented");
   },
+  applications: [] as Application[],
 };
 
 export const AppContext = createContext(defaultContextValues);
@@ -52,11 +53,12 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
   useEffect(() => {
     console.log('applications:', applications);
   }, [applications]);
-  
+
   const contextData = {
     showModal,
     setShowModal,
     fetchApplications,
+    applications,
   };
 
   return (
