@@ -4,7 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 
-const NavBar = () => {
+function NavBar() {
   const { isAuthenticated } = useAuth0();
   const buttonContent = isAuthenticated ? <LogoutButton /> : <LoginButton className="pt-1 pb-1" />;
   

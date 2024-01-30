@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 
-const CreateButton = () => {
+function CreateButton() {
   const { setShowInputModal } = useContext(AppContext);
   
   return (

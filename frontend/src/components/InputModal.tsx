@@ -49,7 +49,6 @@ function InputModal() {
       const responseData = await response.json();
   
       if (response.ok) {
-        console.log('Data saved:', responseData);
         hideModal();
         fetchApplications(userId);
       } else {

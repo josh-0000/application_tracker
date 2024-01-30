@@ -3,36 +3,7 @@ import { Table, Form } from 'react-bootstrap';
 import { AppContext } from '../context/AppContext';
 
 function ApplicationTable() {
-  const { applications } = useContext(AppContext);
-  const [checked, setChecked] = useState(new Array(applications.length).fill(false));
-
-  useEffect(() => {
-    // Update the `checked` array if the number of applications changes
-    setChecked(new Array(applications.length).fill(false));
-  }, [applications]);
-
-  const handleAllCheck = (e: any) => {
-    setChecked(new Array(applications.length).fill(e.target.checked));
-  };
-
-  const handleCheck = (index: any) => {
-    const updatedChecked = [...checked];
-    updatedChecked[index] = !updatedChecked[index];
-    setChecked(updatedChecked);
-  };
-
-  useEffect(() => {
-    console.log('checked:', checked);
-    console.log('getCheckedApplicationIds:', getCheckedApplicationIds());
-  }
-  , [checked]);
-  const allChecked = checked.every(Boolean);
-
-  const getCheckedApplicationIds = () => {
-    return applications
-      .filter((_, index) => checked[index])
-      .map((application) => application.ApplicationId);
-  };
+  const { applications, allChecked, handleAllCheck, checked, handleCheck } = useContext(AppContext);
 
   if (applications.length === 0) {
     return (

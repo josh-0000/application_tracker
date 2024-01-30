@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Button } from "react-bootstrap";
 import { AppContext } from "../context/AppContext";
 
-const DeleteButton = () => {
+function DeleteButton() {
   const { setShowConfirmationModal } = useContext(AppContext);
   
   return (

@@ -15,6 +15,14 @@ const defaultContextValues = {
   setShowConfirmationModal: (_value: boolean) => {
     console.error("setShowConfirmationModal function not yet implemented");
   },
+  allChecked: false,
+  handleAllCheck: (_e: any) => {
+    console.error("handleAllCheck function not yet implemented");
+  },
+  checked: [] as boolean[],
+  handleCheck: (_index: any) => {
+    console.error("handleCheck function not yet implemented");
+  },
 };
 
 export const AppContext = createContext(defaultContextValues);
@@ -24,6 +32,41 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [applications, setApplications] = useState([] as Application[]);
   const { user } = useAuth0();
+  const [checked, setChecked] = useState(new Array(applications.length).fill(false));
+
+  // Update the `checked` array if the number of applications changes
+  useEffect(() => {
+    setChecked(new Array(applications.length).fill(false));
+  }, [applications]);
+
+  // Set all checkboxes to the same value
+  const handleAllCheck = (e: any) => {
+    setChecked(new Array(applications.length).fill(e.target.checked));
+  };
+
+  // Update the `checked` array when a checkbox is clicked
+  const handleCheck = (index: any) => {
+    const updatedChecked = [...checked];
+    updatedChecked[index] = !updatedChecked[index];
+    setChecked(updatedChecked);
+  };
+
+  // Log the checked array whenever it changes
+  useEffect(() => {
+    console.log('checked:', checked);
+    console.log('getCheckedApplicationIds:', getCheckedApplicationIds());
+  }
+  , [checked]);
+  
+  // Determine whether all checkboxes are checked
+  const allChecked = checked.every(Boolean);
+
+  // Return an array of checked application ids
+  const getCheckedApplicationIds = () => {
+    return applications
+      .filter((_, index) => checked[index])
+      .map((application) => application.ApplicationId);
+  };
   
   const fetchApplications = async (userId: string) => {
     try {
@@ -47,6 +90,7 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
     }
   };
 
+  // Fetch applications when the user logs in
   useEffect(() => {
     if (user) {
       fetchApplications(user.sub || '');
@@ -55,9 +99,11 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
     }
   }, [user]);
 
+  // Log the applications whenever they change
   useEffect(() => {
     console.log('applications:', applications);
   }, [applications]);
+
 
   const contextData = {
     showInputModal,
@@ -66,6 +112,10 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
     applications,
     showConfirmationModal,
     setShowConfirmationModal,
+    allChecked,
+    handleAllCheck,
+    checked,
+    handleCheck,
   };
 
   return (
