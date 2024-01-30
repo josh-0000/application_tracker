@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from './LoginButton';
 
 function InputModal() {
-  const { showModal, setShowModal, fetchApplications } = useContext(AppContext);
+  const { showInputModal, setShowInputModal, fetchApplications } = useContext(AppContext);
   const { user } = useAuth0();
   const [company, setCompany] = useState('');
   const [jobTitle, setJobTitle] = useState('');
@@ -14,7 +14,7 @@ function InputModal() {
   const [progress, setProgress] = useState('Just Applied');
 
   const hideModal = () => {
-    setShowModal(false);
+    setShowInputModal(false);
     setCompany('');
     setJobTitle('');
     setLocation('');
@@ -63,7 +63,7 @@ function InputModal() {
   if (!user) {
     return (
       <>
-        <Modal show={showModal} onHide={() => hideModal()}>
+        <Modal show={showInputModal} onHide={() => hideModal()}>
           <Modal.Header closeButton>
             <Modal.Title>Please Login</Modal.Title>
           </Modal.Header>
@@ -86,7 +86,7 @@ function InputModal() {
   }
   return (
     <>
-      <Modal show={showModal} onHide={() => hideModal()}>
+      <Modal show={showInputModal} onHide={() => hideModal()}>
         <Modal.Header closeButton>
           <Modal.Title>Job Information</Modal.Title>
         </Modal.Header>

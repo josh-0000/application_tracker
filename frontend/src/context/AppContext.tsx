@@ -3,20 +3,25 @@ import { Application, ContextProviderProps } from "../interfaces/Interfaces";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const defaultContextValues = {
-  showModal: false,
-  setShowModal: (_value: boolean) => {
-    console.error("setShowModal function not yet implemented");
+  showInputModal: false,
+  setShowInputModal: (_value: boolean) => {
+    console.error("setShowInputModal function not yet implemented");
   },
   fetchApplications: (_userId: any) => {
     console.error("fetchApplications function not yet implemented");
   },
   applications: [] as Application[],
+  showConfirmationModal: false,
+  setShowConfirmationModal: (_value: boolean) => {
+    console.error("setShowConfirmationModal function not yet implemented");
+  },
 };
 
 export const AppContext = createContext(defaultContextValues);
 
 export function AppContextProvider({ children }: ContextProviderProps): JSX.Element {
-  const [showModal, setShowModal] = useState(false);
+  const [showInputModal, setShowInputModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [applications, setApplications] = useState([] as Application[]);
   const { user } = useAuth0();
   
@@ -55,10 +60,12 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
   }, [applications]);
 
   const contextData = {
-    showModal,
-    setShowModal,
+    showInputModal,
+    setShowInputModal,
     fetchApplications,
     applications,
+    showConfirmationModal,
+    setShowConfirmationModal,
   };
 
   return (

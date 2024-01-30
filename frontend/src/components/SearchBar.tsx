@@ -13,7 +13,7 @@ const SearchBar = ({ onSearch }: any) => {
     <Form onSubmit={handleSubmit}>
       <FormControl
         type="text"
-        placeholder="Search"
+        placeholder="Filter"
         className="searchBar mt-5"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}

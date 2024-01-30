@@ -4,6 +4,8 @@ import SearchBar from "./SearchBar";
 import CreateButton from "./CreateButton";
 import InputModal from "./InputModal";
 import ApplicationTable from "./ApplicationTable";
+import RemoveButton from "./DeleteButton";
+import ConfirmationModal from "./ConfirmationModal";
 
 function MainContainer() {
 
@@ -14,13 +16,17 @@ function MainContainer() {
   return (
     <Container className="ms-auto me-auto contentContainer">
       <InputModal />
+      <ConfirmationModal />
       <Row className="mb-3 m-0 p-0">
         <Col className="d-flex justify-content-between align-items-center">
-          <div style={{ flex: 1, marginRight: '10px' }}>
-            <SearchBar onSearch={handleSearch} />
+          <div style={{marginRight: '10px' }}>
+            <CreateButton />
           </div>
           <div>
-            <CreateButton />
+            <RemoveButton />
+          </div>
+          <div style={{ flex: 1, marginLeft: '10px' }}>
+            <SearchBar onSearch={handleSearch} />
           </div>
         </Col>
       </Row>

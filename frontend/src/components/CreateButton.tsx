@@ -4,10 +4,10 @@ import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 
 const CreateButton = () => {
-  const { setShowModal } = useContext(AppContext);
+  const { setShowInputModal } = useContext(AppContext);
   
   return (
-    <Button className="pt-1 pb-1 mt-5" variant="primary" onClick={() => setShowModal(true)}>
+    <Button className="pt-1 pb-1 mt-5" variant="primary" onClick={() => setShowInputModal(true)}>
       Create
     </Button>
   );
