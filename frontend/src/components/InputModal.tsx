@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { AppContext } from '../context/AppContext';
 import { useAuth0 } from "@auth0/auth0-react";
@@ -12,6 +12,13 @@ function InputModal() {
   const [location, setLocation] = useState('');
   const [workLocation, setworkLocation] = useState('Remote');
   const [progress, setProgress] = useState('Just Applied');
+  const [date, setDate] = useState('');
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const formattedDate = (currentDate.getMonth() + 1) + '-' + currentDate.getDate() + '-' + currentDate.getFullYear();
+    setDate(formattedDate);
+  }, []);
 
   const hideModal = () => {
     setShowInputModal(false);
@@ -35,7 +42,8 @@ function InputModal() {
         jobTitle,
         location,
         workLocation,
-        progress
+        progress,
+        date,
       };
   
       const response = await fetch('http://localhost:3001/applications/saveApplication', {

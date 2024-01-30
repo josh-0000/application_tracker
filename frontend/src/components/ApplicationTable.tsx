@@ -50,7 +50,7 @@ function ApplicationTable() {
               <Form.Control 
                 as="select" 
                 value={application.progress}
-                className="p-1"
+                className="p-1 border-0 bg-transparent"
               >
                 <option>Just Applied</option>
                 <option>Rejected</option>
@@ -58,7 +58,7 @@ function ApplicationTable() {
                 <option>Offer</option>
               </Form.Control>
             </td>
-            <td className="align-middle">1994</td>
+            <td className="align-middle">{application.date}</td>
           </tr>
         ))}
       </tbody>

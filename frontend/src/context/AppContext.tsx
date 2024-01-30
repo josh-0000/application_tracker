@@ -23,6 +23,10 @@ const defaultContextValues = {
   handleCheck: (_index: any) => {
     console.error("handleCheck function not yet implemented");
   },
+  getCheckedApplicationIds: (): string[] => {
+    console.error("getCheckedApplicationIds function not yet implemented");
+    return [];
+  },
 };
 
 export const AppContext = createContext(defaultContextValues);
@@ -51,18 +55,11 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
     setChecked(updatedChecked);
   };
 
-  // Log the checked array whenever it changes
-  useEffect(() => {
-    console.log('checked:', checked);
-    console.log('getCheckedApplicationIds:', getCheckedApplicationIds());
-  }
-  , [checked]);
-  
   // Determine whether all checkboxes are checked
   const allChecked = checked.every(Boolean);
 
   // Return an array of checked application ids
-  const getCheckedApplicationIds = () => {
+  const getCheckedApplicationIds = (): string[] => {
     return applications
       .filter((_, index) => checked[index])
       .map((application) => application.ApplicationId);
@@ -116,6 +113,7 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
     handleAllCheck,
     checked,
     handleCheck,
+    getCheckedApplicationIds,
   };
 
   return (

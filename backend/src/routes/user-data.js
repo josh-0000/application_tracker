@@ -1,7 +1,7 @@
 const express = require('express');
 const docClient = require('../utils/db-client');
 const logger = require('../utils/logger');
-const { ScanCommand, PutCommand, QueryCommand } = require('@aws-sdk/lib-dynamodb');
+const { ScanCommand, PutCommand, QueryCommand, BatchWriteCommand } = require('@aws-sdk/lib-dynamodb');
 const { v4: uuidv4 } = require('uuid');
 
 const router = express.Router();
@@ -12,7 +12,6 @@ router.get('/', async (req, res) => {
       TableName: 'Applications'
     }));
     res.json(result.Items);
-    console.log(result.Items);
   } catch (err) {
     logger.error(err);
     res.status(500).json({ error: 'Error retrieving data from DynamoDB' });
@@ -22,8 +21,9 @@ router.get('/', async (req, res) => {
 
 router.post('/saveApplication', async (req, res) => {
   try {
-    const { userId, company, jobTitle, location, workLocation, progress } = req.body;
+    const { userId, company, jobTitle, location, workLocation, progress, date } = req.body;
 
+    console.log(date);
     const applicationId = uuidv4();
     const params = {
       TableName: 'Applications',
@@ -34,7 +34,8 @@ router.post('/saveApplication', async (req, res) => {
         jobTitle, 
         location, 
         workLocation,
-        progress
+        progress,
+        date,
       }
     };
 
@@ -66,12 +67,44 @@ router.post('/fetchApplications', async (req, res) => {
       allItems = allItems.concat(result.Items);
       params.ExclusiveStartKey = result.LastEvaluatedKey;
     } while (typeof result.LastEvaluatedKey !== "undefined");
-
-    console.log(allItems);
     res.json(allItems);
   } catch (err) {
     logger.error(err);
     res.status(500).json({ error: 'Error retrieving data from DynamoDB' });
+    console.log(err);
+  }
+});
+
+router.post('/deleteApplications', async (req, res) => {
+  try {
+    const { applicationIds, userId } = req.body;
+    console.log(applicationIds);
+
+    // Validate that applicationIds is an array
+    if (!Array.isArray(applicationIds)) {
+      return res.status(400).json({ error: 'Invalid input. ApplicationIds should be an array' });
+    }
+
+    // Prepare batch delete request
+    const deleteRequests = applicationIds.map(ApplicationId => ({
+      DeleteRequest: {
+        Key: { UserId: userId, ApplicationId }
+      }
+    }));
+
+    const params = {
+      RequestItems: {
+        'Applications': deleteRequests
+      }
+    };
+
+    const result = await docClient.send(new BatchWriteCommand(params));
+    console.log('Batch delete result:', result);
+
+    res.status(200).json({ message: 'Applications deleted successfully' });
+  } catch (err) {
+    logger.error(err);
+    res.status(500).json({ error: 'Error deleting applications from DynamoDB' });
     console.log(err);
   }
 });

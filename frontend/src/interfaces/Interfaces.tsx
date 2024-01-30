@@ -10,4 +10,5 @@ export interface Application {
   location: string;
   workLocation: string;
   progress: string;
+  date: string;
 }

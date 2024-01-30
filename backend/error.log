@@ -2,3 +2,7 @@
 2024-01-22T06:26:31.813Z [[31merror[39m] - ScanCommand is not defined
 2024-01-27T04:09:26.863Z [[31merror[39m] - One or more parameter values were invalid: Missing the key UserId in the item
 2024-01-27T04:11:58.616Z [[31merror[39m] - One or more parameter values were invalid: Missing the key ApplicationId in the item
+2024-01-30T19:47:25.133Z [[31merror[39m] - DeleteCommand is not defined
+2024-01-30T19:48:19.533Z [[31merror[39m] - The provided key element does not match the schema
+2024-01-30T19:50:11.673Z [[31merror[39m] - The provided key element does not match the schema
+2024-01-30T20:12:08.392Z [[31merror[39m] - BatchWriteCommand is not defined
