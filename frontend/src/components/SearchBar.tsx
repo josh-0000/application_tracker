@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
+import { useContext } from 'react';
 import { Form, FormControl } from 'react-bootstrap';
+import { AppContext } from '../context/AppContext';
 
-function SearchBar({ onSearch }: any) {
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-    onSearch(searchTerm);
-  };
+function SearchBar() {
+  const { searchTerm, setSearchTerm } = useContext(AppContext);
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form>
       <FormControl
         type="text"
         placeholder="Filter"

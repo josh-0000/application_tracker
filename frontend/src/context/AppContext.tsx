@@ -27,6 +27,10 @@ const defaultContextValues = {
     console.error("getCheckedApplicationIds function not yet implemented");
     return [];
   },
+  searchTerm: '',
+  setSearchTerm: (_value: string) => {
+    console.error("setSearchTerm function not yet implemented");
+  },
 };
 
 export const AppContext = createContext(defaultContextValues);
@@ -37,7 +41,8 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
   const [applications, setApplications] = useState([] as Application[]);
   const { user } = useAuth0();
   const [checked, setChecked] = useState(new Array(applications.length).fill(false));
-
+  const [searchTerm, setSearchTerm] = useState('');
+  
   // Update the `checked` array if the number of applications changes
   useEffect(() => {
     setChecked(new Array(applications.length).fill(false));
@@ -77,7 +82,6 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
   
       const responseData = await response.json();
       if (response.ok) {
-        console.log('Data fetched:', responseData);
         setApplications(responseData);
       } else {
         throw new Error(`Error: ${responseData.error}`);
@@ -96,12 +100,6 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
     }
   }, [user]);
 
-  // Log the applications whenever they change
-  useEffect(() => {
-    console.log('applications:', applications);
-  }, [applications]);
-
-
   const contextData = {
     showInputModal,
     setShowInputModal,
@@ -114,6 +112,8 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
     checked,
     handleCheck,
     getCheckedApplicationIds,
+    searchTerm,
+    setSearchTerm,
   };
 
   return (

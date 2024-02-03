@@ -39,12 +39,6 @@ function ConfirmationModal() {
     }
   };
 
-  const applicationIds = getCheckedApplicationIds();
-  if (applicationIds.length === 0) {
-    setShowConfirmationModal(false);
-    return <></>;
-  }
-
   return (
     <>
       <Modal show={showConfirmationModal} onHide={() => setShowConfirmationModal(false)}>

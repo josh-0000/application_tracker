@@ -3,15 +3,32 @@ import { Table, Form } from 'react-bootstrap';
 import { AppContext } from '../context/AppContext';
 
 function ApplicationTable() {
-  const { applications, allChecked, handleAllCheck, checked, handleCheck } = useContext(AppContext);
+  const { searchTerm, applications, allChecked, handleAllCheck, checked, handleCheck } = useContext(AppContext);
+  const [displayedApplications, setDisplayedApplications] = useState(applications);
 
-  if (applications.length === 0) {
+  useEffect(() => {
+    const filteredApplications = searchTerm
+      ? applications.filter(app => 
+          Object.values(app).some(
+            attr => typeof attr === 'string' && attr.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        )
+      : applications;
+
+    setDisplayedApplications(filteredApplications);
+  }, [searchTerm, applications]);
+
+  if (displayedApplications.length === 0) {
     return (
       <div className="text-center mt-5">
         <h3>No applications found</h3>
       </div>
     );
   }
+
+  const handleProgressChange = (e: any, id: string) => {
+    console.log(e.target.value, id);
+  };
 
   return (
     <Table striped bordered hover className="mx-auto rounded-1">
@@ -33,7 +50,7 @@ function ApplicationTable() {
         </tr>
       </thead>
       <tbody>
-        {applications.map((application, index) => (
+        {displayedApplications.map((application, index) => (
           <tr key={index}>
             <td className="align-middle">
               <Form.Check 
@@ -50,9 +67,10 @@ function ApplicationTable() {
               <Form.Control 
                 as="select" 
                 value={application.progress}
-                className="p-1 border-0 bg-transparent"
+                className="p-1 m-0 border-1 bg-light rounded-1"
+                onChange={(e) => handleProgressChange(e, application.ApplicationId)}
               >
-                <option>Just Applied</option>
+                <option>Waiting</option>
                 <option>Rejected</option>
                 <option>Interview</option>
                 <option>Offer</option>

@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import SearchBar from "./SearchBar";
 import CreateButton from "./CreateButton";
@@ -8,10 +7,6 @@ import RemoveButton from "./DeleteButton";
 import ConfirmationModal from "./ConfirmationModal";
 
 function MainContainer() {
-
-  function handleSearch(searchTerm: string) {
-    console.log(searchTerm);
-  }
 
   return (
     <Container className="ms-auto me-auto contentContainer">
@@ -26,7 +21,7 @@ function MainContainer() {
             <RemoveButton />
           </div>
           <div style={{ flex: 1, marginLeft: '10px' }}>
-            <SearchBar onSearch={handleSearch} />
+            <SearchBar />
           </div>
         </Col>
       </Row>
