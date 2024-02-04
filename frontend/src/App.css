@@ -18,3 +18,17 @@
   height: 100vh;
 }
 
+.applicationTable {
+  min-width: 700px;
+  border: none;
+}
+
+.applicationTableContainer {
+  overflow: scroll;
+  max-height: 380px;
+}
+
+.cursorPointer {
+  cursor: pointer;
+  background-color: rgb(93, 93, 93);
+}

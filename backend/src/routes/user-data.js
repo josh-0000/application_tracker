@@ -23,8 +23,7 @@ router.get('/', async (req, res) => {
 router.post('/saveApplication', async (req, res) => {
   try {
     const { userId, company, jobTitle, location, workLocation, progress, date } = req.body;
-
-    console.log(date);
+    
     const applicationId = uuidv4();
     const params = {
       TableName: 'Applications',
@@ -79,7 +78,6 @@ router.post('/fetchApplications', async (req, res) => {
 router.post('/deleteApplications', async (req, res) => {
   try {
     const { applicationIds, userId } = req.body;
-    console.log(applicationIds);
 
     // Validate that applicationIds is an array
     if (!Array.isArray(applicationIds)) {
@@ -132,7 +130,6 @@ router.post('/updateProgress', async (req, res) => {
     };
 
     const result = await docClient.send(new UpdateCommand(params));
-    console.log('Update result:', result);
     res.status(200).json({ message: 'Application progress updated successfully' });
   } catch (err) {
     logger.error(err);

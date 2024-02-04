@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Table, Form } from 'react-bootstrap';
+import { Table, Form, Dropdown } from 'react-bootstrap';
 import { AppContext } from '../context/AppContext';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -61,57 +61,66 @@ function ApplicationTable() {
     }
   };
 
+  const numApplications = displayedApplications.length;
+
   return (
-    <Table striped bordered hover className="mx-auto rounded-1">
-      <thead>
-        <tr>
-          <th>
-            <Form.Check 
-              type="checkbox"
-              checked={allChecked}
-              onChange={handleAllCheck}
-            />
-          </th>
-          <th>Company</th>
-          <th>Job Title</th>
-          <th>Location</th>
-          <th>Work Location</th>
-          <th>Progress</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        {displayedApplications.map((application, index) => (
-          <tr key={index}>
-            <td className="align-middle">
-              <Form.Check 
-                type="checkbox" 
-                checked={checked[index]}
-                onChange={() => handleCheck(index)}
-              />
-            </td>
-            <td className="align-middle">{application.company}</td>
-            <td className="align-middle">{application.jobTitle}</td>
-            <td className="align-middle">{application.location}</td>
-            <td className="align-middle">{application.workLocation}</td>
-            <td className="align-middle">
-              <Form.Control 
-                as="select" 
-                value={application.progress}
-                className="p-1 m-0 border-1 bg-light rounded-1"
-                onChange={(e) => handleProgressChange(e, application.ApplicationId)}
-              >
-                <option>Waiting</option>
-                <option>Rejected</option>
-                <option>Interview</option>
-                <option>Offer</option>
-              </Form.Control>
-            </td>
-            <td className="align-middle">{application.date}</td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
+    <div className='position-relative'>
+      <div className="position-relative shadow-sm mx-auto applicationTableContainer" style={{ maxWidth: '100%' }}>
+        <Table striped bordered hover className="rounded-1 applicationTable m-0">
+          <thead>
+            <tr>
+              <th>
+                <Form.Check 
+                  type="checkbox"
+                  checked={allChecked}
+                  onChange={handleAllCheck}
+                />
+              </th>
+              <th>Company</th>
+              <th>Job Title</th>
+              <th>Location</th>
+              <th>Work Location</th>
+              <th>Progress</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {displayedApplications.map((application, index) => (
+              <tr key={index}>
+                <td className="align-middle">
+                  <Form.Check 
+                    type="checkbox" 
+                    checked={checked[index]}
+                    onChange={() => handleCheck(index)}
+                  />
+                </td>
+                <td className="align-middle">{application.company}</td>
+                <td className="align-middle">{application.jobTitle}</td>
+                <td className="align-middle">{application.location}</td>
+                <td className="align-middle">{application.workLocation}</td>
+                <td className="align-middle">
+                  <Form.Control 
+                    as="select" 
+                    value={application.progress}
+                    className="p-1 m-0 border-1 bg-light rounded-1 cursorPointer"
+                    onChange={(e) => handleProgressChange(e, application.ApplicationId)}
+                  >
+                    <option className='cursorPointer'>Waiting</option>
+                    <option className='cursorPointer'>Rejected</option>
+                    <option className='cursorPointer'>Interview</option>
+                    <option className='cursorPointer'>Offer</option>
+                  </Form.Control>
+                </td>
+                <td className="align-middle">{application.date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+      <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary shadow text-light">
+        {numApplications}
+      </span>
+    </div>
   );
 }
 
