@@ -3,6 +3,7 @@ const docClient = require('../utils/db-client');
 const logger = require('../utils/logger');
 const { ScanCommand, PutCommand, QueryCommand, BatchWriteCommand } = require('@aws-sdk/lib-dynamodb');
 const { v4: uuidv4 } = require('uuid');
+const { UpdateCommand } = require('@aws-sdk/lib-dynamodb');
 
 const router = express.Router();
 
@@ -105,6 +106,37 @@ router.post('/deleteApplications', async (req, res) => {
   } catch (err) {
     logger.error(err);
     res.status(500).json({ error: 'Error deleting applications from DynamoDB' });
+    console.log(err);
+  }
+});
+
+router.post('/updateProgress', async (req, res) => {
+  try {
+    const { userId, applicationId, progress } = req.body;
+
+    if (!userId || !applicationId || !progress) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    const params = {
+      TableName: 'Applications',
+      Key: {
+        UserId: userId,
+        ApplicationId: applicationId
+      },
+      UpdateExpression: 'set progress = :p',
+      ExpressionAttributeValues: {
+        ':p': progress
+      },
+      ReturnValues: 'UPDATED_NEW'
+    };
+
+    const result = await docClient.send(new UpdateCommand(params));
+    console.log('Update result:', result);
+    res.status(200).json({ message: 'Application progress updated successfully' });
+  } catch (err) {
+    logger.error(err);
+    res.status(500).json({ error: 'Error updating application progress in DynamoDB' });
     console.log(err);
   }
 });

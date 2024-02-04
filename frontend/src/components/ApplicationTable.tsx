@@ -1,9 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Table, Form } from 'react-bootstrap';
 import { AppContext } from '../context/AppContext';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function ApplicationTable() {
-  const { searchTerm, applications, allChecked, handleAllCheck, checked, handleCheck } = useContext(AppContext);
+  const { searchTerm, applications, allChecked, handleAllCheck, checked, handleCheck, fetchApplications } = useContext(AppContext);
+  const { user } = useAuth0();
   const [displayedApplications, setDisplayedApplications] = useState(applications);
 
   useEffect(() => {
@@ -26,8 +28,37 @@ function ApplicationTable() {
     );
   }
 
-  const handleProgressChange = (e: any, id: string) => {
-    console.log(e.target.value, id);
+  const handleProgressChange = async (e: any, applicationId: string) => {
+    const newProgress = e.target.value;
+    console.log(newProgress, applicationId);
+    
+    if (!user) {
+      throw new Error('User is undefined!');
+    }
+    
+    try {
+      const response = await fetch('http://localhost:3001/applications/updateProgress', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: user.sub,
+          applicationId: applicationId,
+          progress: newProgress,
+        }),
+      });
+  
+      const responseData = await response.json();
+  
+      if (response.ok) {
+        fetchApplications(user.sub);
+      } else {
+        console.error('Failed to update progress:', responseData.error);
+      }
+    } catch (error) {
+      console.error('Failed to update progress:', error);
+    }
   };
 
   return (

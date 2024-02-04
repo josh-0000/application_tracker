@@ -6,3 +6,11 @@
 2024-01-30T19:48:19.533Z [[31merror[39m] - The provided key element does not match the schema
 2024-01-30T19:50:11.673Z [[31merror[39m] - The provided key element does not match the schema
 2024-01-30T20:12:08.392Z [[31merror[39m] - BatchWriteCommand is not defined
+2024-02-03T23:56:17.125Z [[31merror[39m] - UpdateItemCommand is not a constructor
+2024-02-03T23:59:46.898Z [[31merror[39m] - UpdateItemCommand is not a constructor
+2024-02-04T00:03:39.724Z [[31merror[39m] - UpdateItemCommand is not a constructor
+2024-02-04T00:08:04.778Z [[31merror[39m] - UpdateItemCommand is not a constructor
+2024-02-04T00:13:57.287Z [[31merror[39m] - UpdateItemCommand is not a constructor
+2024-02-04T00:14:15.092Z [[31merror[39m] - UpdateItemCommand is not a constructor
+2024-02-04T00:18:13.546Z [[31merror[39m] - UpdateItemCommand is not a constructor
+2024-02-04T00:20:19.223Z [[31merror[39m] - The provided key element does not match the schema
