@@ -86,7 +86,10 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
   
   const fetchApplications = async (userId: string) => {
     try {
-      const response = await fetch('http://localhost:3001/applications/fetchApplications', {
+      if (!process.env.REACT_APP_FETCH_APPLICATIONS_URL) {
+        throw new Error('REACT_APP_FETCH_APPLICATIONS_URL is undefined');
+      }
+      const response = await fetch(process.env.REACT_APP_FETCH_APPLICATIONS_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

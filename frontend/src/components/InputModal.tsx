@@ -123,7 +123,11 @@ function InputModal() {
         date,
       };
   
-      const response = await fetch('http://localhost:3001/applications/saveApplication', {
+      if (!process.env.REACT_APP_SAVE_APPLICATION_URL) {
+        throw new Error('REACT_APP_SAVE_APPLICATION_URL is undefined');
+      }
+
+      const response = await fetch(process.env.REACT_APP_SAVE_APPLICATION_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

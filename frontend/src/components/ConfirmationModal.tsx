@@ -13,8 +13,12 @@ function ConfirmationModal() {
     const selectedApplicationIds = getCheckedApplicationIds();
 
     try {
+      if (!process.env.REACT_APP_DELETE_APPLICATIONS_URL) {
+        throw new Error('REACT_APP_DELETE_APPLICATIONS_URL is undefined');
+      }
+
       // Send a POST request to your deleteApplications endpoint with the selected ApplicationIds
-      const response = await fetch('http://localhost:3001/applications/deleteApplications', {
+      const response = await fetch(process.env.REACT_APP_DELETE_APPLICATIONS_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

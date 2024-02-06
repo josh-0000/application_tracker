@@ -20,13 +20,7 @@ function ApplicationTable() {
     setDisplayedApplications(filteredApplications);
   }, [searchTerm, applications]);
 
-  if (displayedApplications.length === 0) {
-    return (
-      <div className="text-center mt-5">
-        <h3>No applications found</h3>
-      </div>
-    );
-  }
+
 
   const handleProgressChange = async (e: any, applicationId: string) => {
     const newProgress = e.target.value;
@@ -34,10 +28,12 @@ function ApplicationTable() {
     
     if (!user) {
       throw new Error('User is undefined!');
+    } else if (!process.env.REACT_APP_UPDATE_PROGRESS_URL) {
+      throw new Error('REACT_APP_UPDATE_PROGRESS_URL is undefined');
     }
-    
+
     try {
-      const response = await fetch('http://localhost:3001/applications/updateProgress', {
+      const response = await fetch(process.env.REACT_APP_UPDATE_PROGRESS_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,6 +56,14 @@ function ApplicationTable() {
       console.error('Failed to update progress:', error);
     }
   };
+
+  if (displayedApplications.length === 0) {
+    return (
+      <div className="text-center mt-5">
+        <h3>No applications found</h3>
+      </div>
+    );
+  }
 
   const numApplications = displayedApplications.length;
 
