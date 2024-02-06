@@ -69,6 +69,20 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
       .filter((_, index) => checked[index])
       .map((application) => application.ApplicationId);
   };
+
+  function sortApplicationsByDate(applications: Application[]) {
+    return applications.sort((a: any, b: any) => a.date - b.date);
+  }
+
+  function formatApplicationDates(applications: Application[]) {
+    return applications.map(application => ({
+      ...application,
+      date: new Date(application.date).toLocaleDateString('en-US', {
+        year: '2-digit', month: '2-digit', day: '2-digit'
+      })
+    }));
+  }
+  
   
   const fetchApplications = async (userId: string) => {
     try {
@@ -82,7 +96,7 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
   
       const responseData = await response.json();
       if (response.ok) {
-        setApplications(responseData);
+        setApplications(formatApplicationDates(sortApplicationsByDate(responseData)));
       } else {
         throw new Error(`Error: ${responseData.error}`);
       }

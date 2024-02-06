@@ -12,7 +12,7 @@ function InputModal() {
   const [location, setLocation] = useState('');
   const [workLocation, setworkLocation] = useState('Remote');
   const [progress, setProgress] = useState('Waiting');
-  const [date, setDate] = useState('');
+  const date = new Date().getTime();
 
   const [companySuggestions, setCompanySuggestions] = useState([] as string[]);
   const [jobTitleSuggestions, setJobTitleSuggestions] = useState([] as string[]);
@@ -50,13 +50,6 @@ function InputModal() {
     const uniqueSuggestions = Array.from(new Set(suggestions));
     setLocationSuggestions(uniqueSuggestions);
   }, [location, applications]);
-
-  // Set the current date when the modal is shown
-  useEffect(() => {
-    const currentDate = new Date();
-    const formattedDate = (currentDate.getMonth() + 1) + '-' + currentDate.getDate() + '-' + currentDate.getFullYear();
-    setDate(formattedDate);
-  }, []);
 
   // Close the suggestions list when clicking outside the list and input field
   useEffect(() => {

@@ -69,13 +69,14 @@ function ApplicationTable() {
         <Table striped bordered hover className="rounded-1 applicationTable m-0">
           <thead>
             <tr>
-              <th>
+              <th style={{width: '20px' }}>
                 <Form.Check 
                   type="checkbox"
                   checked={allChecked}
                   onChange={handleAllCheck}
                 />
               </th>
+              <th style={{width: '20px'}} className='text-center'>#</th>
               <th>Company</th>
               <th>Job Title</th>
               <th>Location</th>
@@ -94,6 +95,7 @@ function ApplicationTable() {
                     onChange={() => handleCheck(index)}
                   />
                 </td>
+                <td className="align-middle text-center">{index + 1}</td>
                 <td className="align-middle">{application.company}</td>
                 <td className="align-middle">{application.jobTitle}</td>
                 <td className="align-middle">{application.location}</td>
@@ -111,7 +113,9 @@ function ApplicationTable() {
                     <option className='cursorPointer'>Offer</option>
                   </Form.Control>
                 </td>
-                <td className="align-middle">{application.date}</td>
+                <td className="align-middle">
+                  {application.date}
+                </td>
               </tr>
             ))}
           </tbody>
