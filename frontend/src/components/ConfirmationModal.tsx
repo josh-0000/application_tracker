@@ -6,13 +6,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 function ConfirmationModal() {
   const { showConfirmationModal, setShowConfirmationModal, getCheckedApplicationIds, fetchApplications } = useContext(AppContext);
   const { user } = useAuth0();
-  const handleDelete = async () => {
-    console.log('Deleting...');
 
+  // Send a request to delete the selected applications
+  const handleDelete = async () => {
     // Get the selected ApplicationIds using getCheckedApplicationIds
     const selectedApplicationIds = getCheckedApplicationIds();
 
     try {
+      // Check if env variable is undefined
       if (!process.env.REACT_APP_DELETE_APPLICATIONS_URL) {
         throw new Error('REACT_APP_DELETE_APPLICATIONS_URL is undefined');
       }
@@ -30,7 +31,7 @@ function ConfirmationModal() {
       });
 
       if (response.ok) {
-        console.log('Applications deleted successfully');
+        // If the request is successful, fetch the applications again
         if (user) {
           fetchApplications(user.sub || '');
         }
@@ -40,6 +41,7 @@ function ConfirmationModal() {
       }
     } catch (error) {
       console.error('Error deleting applications:', error);
+      alert('Error deleting applications');
     }
   };
 

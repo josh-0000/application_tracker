@@ -70,10 +70,12 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
       .map((application) => application.ApplicationId);
   };
 
+  // Sort applications by date
   function sortApplicationsByDate(applications: Application[]) {
     return applications.sort((a: any, b: any) => a.date - b.date);
   }
 
+  // Format the date of each application
   function formatApplicationDates(applications: Application[]) {
     return applications.map(application => ({
       ...application,
@@ -83,7 +85,7 @@ export function AppContextProvider({ children }: ContextProviderProps): JSX.Elem
     }));
   }
   
-  
+  // Fetch applications from the server
   const fetchApplications = async (userId: string) => {
     try {
       if (!process.env.REACT_APP_FETCH_APPLICATIONS_URL) {

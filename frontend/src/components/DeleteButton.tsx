@@ -7,6 +7,7 @@ function DeleteButton() {
 
   const handleDelete = () => {
     const applicationIds = getCheckedApplicationIds();
+    
     if (applicationIds.length !== 0) {
       setShowConfirmationModal(true);
     }

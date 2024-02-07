@@ -8,6 +8,7 @@ function ApplicationTable() {
   const { user } = useAuth0();
   const [displayedApplications, setDisplayedApplications] = useState(applications);
 
+  // Update displayedApplications when applications or searchTerm changes
   useEffect(() => {
     const filteredApplications = searchTerm
       ? applications.filter(app => 
@@ -20,8 +21,7 @@ function ApplicationTable() {
     setDisplayedApplications(filteredApplications);
   }, [searchTerm, applications]);
 
-
-
+  // Send a request to update the progress of an application
   const handleProgressChange = async (e: any, applicationId: string) => {
     const newProgress = e.target.value;
     console.log(newProgress, applicationId);
@@ -54,9 +54,11 @@ function ApplicationTable() {
       }
     } catch (error) {
       console.error('Failed to update progress:', error);
+      alert('Failed to update progress');
     }
   };
 
+  // If there are no applications, display a message
   if (displayedApplications.length === 0) {
     return (
       <div className="text-center mt-5">
@@ -65,6 +67,7 @@ function ApplicationTable() {
     );
   }
 
+  // Number of applications for the badge
   const numApplications = displayedApplications.length;
 
   return (

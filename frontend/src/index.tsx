@@ -13,6 +13,7 @@ const root = ReactDOM.createRoot(
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN || 'undefined';
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID || 'undefined';
+const redirectUri = process.env.REACT_APP_REDIRECT_URL || 'undefined';
 
 root.render(
   <React.StrictMode>
@@ -20,7 +21,7 @@ root.render(
       domain={domain}
       clientId={clientId}
       authorizationParams={{
-        redirect_uri: "http://localhost:3000"
+        redirect_uri: redirectUri
       }}
     >
       <App />

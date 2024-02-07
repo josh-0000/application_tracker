@@ -7,18 +7,26 @@ import LoginButton from './LoginButton';
 function InputModal() {
   const { showInputModal, setShowInputModal, fetchApplications, applications } = useContext(AppContext);
   const { user } = useAuth0();
+
+  // The state for the input fields
   const [company, setCompany] = useState('');
   const [jobTitle, setJobTitle] = useState('');
   const [location, setLocation] = useState('');
   const [workLocation, setworkLocation] = useState('Remote');
-  const [progress, setProgress] = useState('Waiting');
+
+  // Constants for the progress and date fields
+  const progress = 'Waiting';
   const date = new Date().getTime();
 
+  // The state for the suggestions lists
   const [companySuggestions, setCompanySuggestions] = useState([] as string[]);
   const [jobTitleSuggestions, setJobTitleSuggestions] = useState([] as string[]);
   const [locationSuggestions, setLocationSuggestions] = useState([] as string[]);
 
+  // The state for the selected suggestion index
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
+
+  // Reference to the suggestions list
   const suggestionsRef = useRef<HTMLUListElement>(null);
 
   // Update the `companySuggestions` array when the `company` state changes
@@ -41,7 +49,7 @@ function InputModal() {
     setJobTitleSuggestions(uniqueSuggestions);
   }, [jobTitle, applications]);
   
-  // For Location Suggestions
+  // Update the `locationSuggestions` array when the `location` state changes
   useEffect(() => {
     const suggestions = applications
       .filter(app => app.location.toLowerCase().includes(location.toLowerCase()) && app.location.toLowerCase() !== location.toLowerCase())
@@ -144,6 +152,7 @@ function InputModal() {
         throw new Error(`Error: ${responseData.error}`);
       }
     } catch (error) {
+      alert('Error saving application data');
       console.error('Error saving application data:', error);
     }
   };
